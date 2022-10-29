@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tokokueku/screens/live_chat.dart';
 //import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokokueku/screens/login_screen.dart';
 import 'package:tokokueku/screens/home_screen.dart';
@@ -40,7 +41,7 @@ class MenuUtamaState extends State<MenuUtama> {
     var id = pref.getString("id_user");
     var accessToken = pref.getString("token");
     final result = await http
-        .get(Uri.parse("https://farizan.my.id/api/get-profile/$id"), headers: {
+        .get(Uri.parse("http://103.187.147.121/api/get-profile/$id"), headers: {
       'Content-Type': 'application/json;charset=UTF-8',
       'Charset': 'utf-8'
     });
@@ -52,15 +53,14 @@ class MenuUtamaState extends State<MenuUtama> {
         _email = dataDecode['email'];
         _no_wa = dataDecode['no_wa'];
         //_avatar = "https://farizan.my.id/user_foto/" + dataDecode["foto"];
-
       });
 
       final imageResponse = await http.get(
-          Uri.parse("https://farizan.my.id/user_foto/" + dataDecode["foto"]));
+          Uri.parse("http://103.187.147.121/user_foto/" + dataDecode["foto"]));
 
       if (imageResponse.statusCode == 200) {
         setState(() {
-          _avatar = "https://farizan.my.id/user_foto/" + dataDecode["foto"];
+          _avatar = "http://103.187.147.121/user_foto/" + dataDecode["foto"];
         });
       }
     }
@@ -116,8 +116,7 @@ class MenuUtamaState extends State<MenuUtama> {
                 ),
                 accountEmail: Text(_email.toString()),
                 currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      _avatar),
+                  backgroundImage: NetworkImage(_avatar),
                 ),
                 decoration: BoxDecoration(color: Colors.red[400]),
               ),
@@ -131,18 +130,6 @@ class MenuUtamaState extends State<MenuUtama> {
                   //_launchWhatsapp();
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const Profile()));
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.money,
-                  color: Colors.blue.shade400,
-                ),
-                title: const Text("Dana"),
-                onTap: () {
-                  //_launchWhatsapp();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const dana()));
                 },
               ),
               ListTile(
@@ -175,7 +162,8 @@ class MenuUtamaState extends State<MenuUtama> {
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => const LoginScreen()),
+                          builder: (BuildContext context) =>
+                              const LoginScreen()),
                       ModalRoute.withName('/'));
                 },
               )
@@ -205,7 +193,10 @@ class MenuUtamaState extends State<MenuUtama> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: const <Widget>[
-                        Icon(Icons.person, color:  Colors.blue, size: 70.0),
+                        Icon(Icons.person, color: Colors.blue, size: 70.0),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Text(
                           "Profile",
                           style: TextStyle(fontSize: 17.0),
@@ -220,8 +211,10 @@ class MenuUtamaState extends State<MenuUtama> {
                 child: InkWell(
                   // onTap: () {},
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const HomeScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()));
                   },
 
                   splashColor: Colors.green,
@@ -229,7 +222,10 @@ class MenuUtamaState extends State<MenuUtama> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: const <Widget>[
-                        Icon(Icons.payment, color: Colors.blue, size: 70.0),
+                        Icon(Icons.cake, color: Colors.red, size: 70.0),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Text(
                           "Order",
                           style: TextStyle(fontSize: 17.0),
@@ -239,29 +235,60 @@ class MenuUtamaState extends State<MenuUtama> {
                   ),
                 ),
               ),
-              // Card(
-              //   margin: const EdgeInsets.all(8.0),
-              //   child: InkWell(
-              //     // onTap: () {},
-              //     onTap: () {
-              //       _launchWhatsapp();
-              //     },
-              //
-              //     splashColor: Colors.green,
-              //     child: Center(
-              //       child: Column(
-              //         mainAxisSize: MainAxisSize.min,
-              //         children: const <Widget>[
-              //           Icon(Icons.payment, color: Colors.blue, size: 70.0),
-              //           Text(
-              //             "WhatApps",
-              //             style: TextStyle(fontSize: 17.0),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              Card(
+                margin: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  // onTap: () {},
+                  onTap: () {
+                    _launchWhatsapp();
+                  },
+                  splashColor: Colors.green,
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const <Widget>[
+                        Icon(Icons.whatsapp, color: Colors.green, size: 70.0),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Chat via Whatsapp",
+                          style: TextStyle(fontSize: 17.0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Card(
+                margin: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  // onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LiveChat()));
+                  },
+                  splashColor: Colors.green,
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const <Widget>[
+                        Icon(Icons.chat_bubble,
+                            color: Colors.orange, size: 70.0),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Live Chat",
+                          style: TextStyle(fontSize: 17.0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ));

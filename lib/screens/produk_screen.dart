@@ -15,10 +15,10 @@ class _DetailProdukState extends State<DetailProduk> {
   @override
   Widget build(BuildContext context) {
     final String namaProduk = widget.produk['nama'];
-    final double hargaProduk = double.parse(widget.produk['harga']);
+    final double hargaProduk = double.parse(widget.produk['harga'].toString());
     final String deskripsiProduk = widget.produk['deskripsi'];
     final String photoProduk =
-        'https://farizan.my.id/foto/${widget.produk['foto']}';
+        'http://103.187.147.121/foto/${widget.produk['foto']}';
 
     final formatter = NumberFormat.simpleCurrency(locale: 'id_ID');
     final String hargaProdukRupiah = formatter.format(hargaProduk);
@@ -74,7 +74,8 @@ class _DetailProdukState extends State<DetailProduk> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           // Add your onPressed code here!
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()));
         },
         label: const Text('Kembali'),
         icon: const Icon(Icons.arrow_back),

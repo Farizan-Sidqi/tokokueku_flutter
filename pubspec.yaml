@@ -44,6 +44,8 @@ dependencies:
   intl: ^0.17.0
   cached_network_image: ^3.2.1
   file_picker: ^4.3.3
+  webview_flutter: ^3.0.3
+  flutter_tawk: ^0.1.0
 
 dev_dependencies:
   flutter_test:

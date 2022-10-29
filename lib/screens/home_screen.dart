@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 import 'package:tokokueku/screens/order_screen.dart';
 import 'package:tokokueku/screens/menu_utama.dart';
 import 'package:tokokueku/screens/produk_screen.dart';
@@ -20,13 +19,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final String apiUrl = "https://farizan.my.id/api/produk";
+  final String apiUrl = "http://103.187.147.121/api/produk";
   List<ListOrder> orderList = [];
   int totalItem = 0;
 
   void klikBeli(item) {
     bool containsItem = orderList.any((element) => element.id == item['id']);
-    debugPrint("bool : $containsItem" );
+    debugPrint("bool : $containsItem");
     setState(() {
       totalItem++;
       //ceck exist
@@ -39,21 +38,17 @@ class _HomeScreenState extends State<HomeScreen> {
           int newQty = orderList[index].qty! + 1;
           int hargaBrg = orderList[index].harga!;
           orderList[index].qty = newQty;
-          final int totalHarga =
-              newQty * hargaBrg;
+          final int totalHarga = newQty * hargaBrg;
           orderList[index].total_harga = totalHarga;
-
         }
-
-        
       } else {
         orderList.add(ListOrder(
-            id: item['id'],
+            id: item['id'].toString(),
             nama: item['nama'],
             foto: item['foto'],
             qty: 1,
-            harga: int.parse(item['harga']),
-            total_harga: int.parse(item['harga'])));
+            harga: int.parse(item['harga'].toString()),
+            total_harga: int.parse(item['harga'].toString())));
       }
 
       addToChart(orderList, totalItem);
@@ -117,12 +112,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return json.decode(result.body);
   }
 
-  String formatNumber(String number)
-  {
+  String formatNumber(String number) {
     var numb = int.parse(number);
     var formatter = NumberFormat("#,##0.00", "en_US");
     return formatter.format(numb);
-    
   }
 
   @override
@@ -137,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: CircleAvatar(
           backgroundImage:
               // ignore: prefer_interpolation_to_compose_strings
-              NetworkImage('https://farizan.my.id/foto/' + item['foto']),
+              NetworkImage('http://103.187.147.121/foto/' + item['foto']),
         ),
         title: InkWell(
           child: Text(item['nama'].toString(),

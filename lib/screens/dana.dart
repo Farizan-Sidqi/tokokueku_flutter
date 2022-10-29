@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class dana extends StatelessWidget {
   const dana({Key? key}) : super(key: key);
 
@@ -13,7 +12,7 @@ class dana extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Dana'),
         ),
-        body: new Container(
+        body: Container(
           color: Colors.grey[200],
           child: new Image.asset('images/dana.PNG'),
           alignment: Alignment.center,

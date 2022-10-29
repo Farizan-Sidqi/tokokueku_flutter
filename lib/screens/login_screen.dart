@@ -18,8 +18,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  String _email = '';
-  String _password = '';
+  String _email = 'naufal@nafaarts.com';
+  String _password = '123123123';
 
   loginPressed() async {
     if (_email.isNotEmpty && _password.isNotEmpty) {
@@ -28,13 +28,8 @@ class LoginScreenState extends State<LoginScreen> {
 
       if (response.statusCode == 200) {
         //save session
-        //debugPrint(responseMap['id'].toString());
-        saveSession(responseMap['id'].toString(), responseMap['access_token'].toString());
-        /*Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => const HomeScreen(),
-            ));*/
+        saveSession(responseMap['id'].toString(),
+            responseMap['access_token'].toString());
       } else {
         errorSnackBar(context, responseMap.values.first);
       }
@@ -44,14 +39,14 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   saveSession(id, token) async {
-
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("id_user", id);
     await pref.setString("token", token);
 
     Navigator.push(
         // context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-        context, MaterialPageRoute(builder: (context) => const MenuUtama()));
+        context,
+        MaterialPageRoute(builder: (context) => const MenuUtama()));
 
     /*Navigator.push(
         context,

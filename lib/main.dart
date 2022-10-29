@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:tokokue/screens/home_screen.dart';
-//import 'package:tokokue/screens/register_screen.dart';
+import 'package:tokokueku/screens/bayar.dart';
 import 'package:tokokueku/screens/splashScreen.dart';
 
 void main() {
@@ -16,6 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
       //home: HomeScreen()
+      // home: Pembayaran(orderId: "32"),
     );
   }
 }

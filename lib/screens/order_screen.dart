@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:tokokueku/Screens/menu_utama.dart';
+import 'package:tokokueku/screens/bayar.dart';
 import 'package:tokokueku/screens/home_screen.dart';
 
 //import '../models/detailpost.dart';
@@ -85,7 +86,6 @@ class _OrderScreenState extends State<OrderScreen> {
     });
 
     try {
-
       var postData = jsonEncode({
         "user_id": idUser,
         "total_qty": totalQty,
@@ -96,12 +96,12 @@ class _OrderScreenState extends State<OrderScreen> {
       });
 
       debugPrint(postData.toString());
-      final response = await http.post(
-          Uri.parse("https://farizan.my.id/api/order/store"),
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: postData);
+      final response =
+          await http.post(Uri.parse("http://103.187.147.121/api/order/store"),
+              headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+              },
+              body: postData);
 
       if (!mounted) return;
       final data = jsonDecode(response.body);
@@ -116,17 +116,27 @@ class _OrderScreenState extends State<OrderScreen> {
           context: context,
           builder: (BuildContext context) => AlertDialog(
             title: const Text('Order berhasil'),
-            content: Text(data['message']),
+            content: Text(data['message'].toString()),
             actions: <Widget>[
               TextButton(
                 onPressed: () async {
+                  debugPrint("ID:${data['data']['id']}");
                   SharedPreferences pref =
-                  await SharedPreferences.getInstance();
+                      await SharedPreferences.getInstance();
                   await pref.remove("orderList");
-                  //clear pref
-                  toHomeScreen();
+                  // //clear pref
+                  // ignore: use_build_context_synchronously
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Pembayaran(
+                        orderId: data['data']['id'].toString(),
+                      ),
+                    ),
+                  );
+                  // toHomeScreen();
                 },
-                child: const Text('OK'),
+                child: const Text('BAYAR SEKARANG'),
               ),
             ],
           ),
@@ -140,7 +150,7 @@ class _OrderScreenState extends State<OrderScreen> {
           context: context,
           builder: (BuildContext context) => AlertDialog(
             title: const Text('Info'),
-            content: Text(data['message']),
+            content: const Text('Mohon isi catatan dan alamat antar'),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context, 'OK'),
@@ -171,12 +181,10 @@ class _OrderScreenState extends State<OrderScreen> {
     }
   }
 
-  String formatNumber(String number)
-  {
+  String formatNumber(String number) {
     var numb = int.parse(number);
     var formatter = NumberFormat("#,##0.00", "en_US");
     return formatter.format(numb);
-
   }
 
   @override
@@ -190,14 +198,12 @@ class _OrderScreenState extends State<OrderScreen> {
     return Card(
       elevation: 2,
       child: ListTile(
-
         leading: CircleAvatar(
           backgroundImage:
-          NetworkImage('https://farizan.my.id/foto/${item.foto}'),
-
+              NetworkImage('http://103.187.147.121/foto/${item.foto}'),
         ),
         title:
-        Text(item.nama.toString(), style: const TextStyle(fontSize: 18.0)),
+            Text(item.nama.toString(), style: const TextStyle(fontSize: 18.0)),
         subtitle: Text("${item.qty} PKT"),
         trailing: Row(
             mainAxisSize: MainAxisSize.min,
@@ -222,8 +228,7 @@ class _OrderScreenState extends State<OrderScreen> {
                           item.total_harga = totalHargaBrg;
 
                           //update total
-                          totalHarga =
-                              totalHarga - hargaBrg;
+                          totalHarga = totalHarga - hargaBrg;
                           updateListOrder(orderList, totalQty);
                           if (item.qty == 0) {
                             //remove list
@@ -231,13 +236,20 @@ class _OrderScreenState extends State<OrderScreen> {
                           }
                         });
                       },
-                      icon: const Icon(Icons.remove, size: 15,))),
+                      icon: const Icon(
+                        Icons.remove,
+                        size: 15,
+                      ))),
               const SizedBox(width: 8),
               CircleAvatar(
                   radius: 15,
                   backgroundColor: Colors.lightBlue,
                   child: IconButton(
-                      icon: const Icon(Icons.add, size: 15, color: Colors.white,),
+                      icon: const Icon(
+                        Icons.add,
+                        size: 15,
+                        color: Colors.white,
+                      ),
                       onPressed: () {
                         setState(() {
                           totalQty++;
@@ -249,8 +261,7 @@ class _OrderScreenState extends State<OrderScreen> {
                           item.total_harga = totalHargaBrg;
 
                           //update total
-                          totalHarga =
-                              totalHarga + hargaBrg;
+                          totalHarga = totalHarga + hargaBrg;
                           updateListOrder(orderList, totalQty);
                         });
                       }))
@@ -267,102 +278,104 @@ class _OrderScreenState extends State<OrderScreen> {
       child: Scaffold(
           appBar: AppBar(
               leading: BackButton(onPressed: () {
-                Navigator.pushReplacement(
-                    context,
+                Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => const MenuUtama()));
               }),
-              title: const Text('Detail Order'), actions: const <Widget>[]),
+              title: const Text('Detail Order'),
+              actions: const <Widget>[]),
           resizeToAvoidBottomInset: true,
           body: Container(
             height: MediaQuery.of(context).size.height,
             margin: const EdgeInsets.all(0),
             child: orderList.isNotEmpty
                 ? Stack(
-              children: [
-                ListView.builder(
-                    itemCount: orderList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return buildListOrder(index);
-                    }),
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                        height: screenSize.height / 3.5,
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(15),
-                        margin: const EdgeInsets.only(
-                            left: 10, right: 10, bottom: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset: const Offset(
-                                  0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: isLoading ? Container(
-                          margin: const EdgeInsets.all(0),
-                          height: 80,
-                          child: Center(
-                            child: Column(children: const [
-                              CircularProgressIndicator(
-                                color: Colors.grey,
+                    children: [
+                      ListView.builder(
+                          itemCount: orderList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return buildListOrder(index);
+                          }),
+                      Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                              height: screenSize.height / 3.5,
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(15),
+                              margin: const EdgeInsets.only(
+                                  left: 10, right: 10, bottom: 20),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: const Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: 10),
-                              Text("Proses menyimpan ...")
-                            ]),
-                          ),
-                        ) : ListView(
-                          shrinkWrap: true,
-                          children: [
-                            const Text("Tambah catatan :"),
-                            TextField(
-                              controller: catatan,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: '...',
-                              ),
-                              onChanged: (text) {
-                                textCatatan = text;
-                              },
-                            ),
-                            const Text("Alamat antar:"),
-                            TextField(
-                              controller: catatan,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: '...',
-                              ),
-                              onChanged: (text) {
-                                textAlamat = text;
-                              },
-                            ),
-                            Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Rp. ${formatNumber(totalHarga.toString())}",
-                                  style: const TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      simpanOrder();
-                                    },
-                                    child: const Text("SIMPAN"))
-                              ],
-                            ),
-                          ],
-                        )))
-              ],
-            )
+                              child: isLoading
+                                  ? Container(
+                                      margin: const EdgeInsets.all(0),
+                                      height: 80,
+                                      child: Center(
+                                        child: Column(children: const [
+                                          CircularProgressIndicator(
+                                            color: Colors.grey,
+                                          ),
+                                          SizedBox(height: 10),
+                                          Text("Proses menyimpan ...")
+                                        ]),
+                                      ),
+                                    )
+                                  : ListView(
+                                      shrinkWrap: true,
+                                      children: [
+                                        const Text("Tambah catatan :"),
+                                        TextField(
+                                          controller: catatan,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            labelText: '...',
+                                          ),
+                                          onChanged: (text) {
+                                            textCatatan = text;
+                                          },
+                                        ),
+                                        const Text("Alamat antar:"),
+                                        TextField(
+                                          controller: catatan,
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            labelText: '...',
+                                          ),
+                                          onChanged: (text) {
+                                            textAlamat = text;
+                                          },
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Rp. ${formatNumber(totalHarga.toString())}",
+                                              style: const TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            ElevatedButton(
+                                                onPressed: () {
+                                                  simpanOrder();
+                                                },
+                                                child: const Text("SIMPAN"))
+                                          ],
+                                        ),
+                                      ],
+                                    )))
+                    ],
+                  )
                 : const Center(child: Text("Data order masih kosong")),
           )),
     );
