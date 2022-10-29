@@ -171,14 +171,14 @@ class ProfileState extends State<Profile> {
     return Container(
       width: double.infinity,
       height: 180,
-      color: Colors.amber,
+      color: Colors.red,
       child: Stack(children: [
         Center(
           child: isPreview
               ? Container(
                   width: double.infinity,
                   height: 120.0,
-                  color: Colors.amber,
+                  color: Colors.red,
                   child: Image.file(
                     File(photoPath.toString()),
                     fit: BoxFit.contain,
@@ -218,7 +218,7 @@ class ProfileState extends State<Profile> {
             height: 50,
             decoration: const ShapeDecoration(
               shape: CircleBorder(),
-              color: Colors.amber,
+              color: Colors.red,
             ),
             child: IconButton(
               onPressed: () {
@@ -238,7 +238,7 @@ class ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 223, 53, 53),
+        backgroundColor: Colors.red,
         centerTitle: true,
         elevation: 0,
         title: const Text(
@@ -331,12 +331,12 @@ class ProfileState extends State<Profile> {
                       updateProfile();
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlue,
+                      primary: Colors.red,
                       minimumSize: const Size.fromHeight(50),
                       elevation: 10,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
-                        side: const BorderSide(color: Colors.blue),
+                        side: const BorderSide(color: Colors.red),
                       ),
                     ),
                     child: const Padding(

@@ -173,10 +173,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
           title: const Text('Daftar Produk'),
+          centerTitle: true,
           leading: BackButton(onPressed: () {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const MenuUtama()));
           }),
+          backgroundColor: Color.fromARGB(255, 223, 53, 53),
           actions: <Widget>[shoppingCartBadge()]),
       body: Container(
         margin: const EdgeInsets.all(0),

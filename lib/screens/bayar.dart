@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:tokokueku/screens/home_screen.dart';
+import 'package:tokokueku/screens/menu_utama.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Pembayaran extends StatefulWidget {
@@ -26,7 +26,7 @@ class _PembayaranState extends State<Pembayaran> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
+        builder: (context) => const MenuUtama(),
       ),
     );
     return true;
@@ -39,6 +39,8 @@ class _PembayaranState extends State<Pembayaran> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Pembayaran"),
+          centerTitle: true,
+          backgroundColor: Colors.red,
         ),
         body: WebView(
           initialUrl: "https://farizan.my.id/pay/${widget.orderId}",

@@ -24,7 +24,11 @@ class _DetailProdukState extends State<DetailProduk> {
     final String hargaProdukRupiah = formatter.format(hargaProduk);
 
     return Scaffold(
-      appBar: AppBar(title: Text(namaProduk)),
+      appBar: AppBar(
+        title: Text(namaProduk),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 223, 53, 53),
+      ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(

@@ -91,7 +91,7 @@ class MenuUtamaState extends State<MenuUtama> {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 223, 53, 53),
+          backgroundColor: Colors.red,
           centerTitle: true,
           elevation: 0,
           title: const Text(
@@ -102,10 +102,8 @@ class MenuUtamaState extends State<MenuUtama> {
             ),
           ),
         ),
-        backgroundColor: Colors.red[100],
         //drawer navbar pada app bar
         drawer: Drawer(
-          backgroundColor: Colors.red[200],
           child: ListView(
             children: <Widget>[
               UserAccountsDrawerHeader(
@@ -118,12 +116,14 @@ class MenuUtamaState extends State<MenuUtama> {
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: NetworkImage(_avatar),
                 ),
-                decoration: BoxDecoration(color: Colors.red[400]),
+                decoration: const BoxDecoration(
+                  color: Colors.red,
+                ),
               ),
               ListTile(
-                leading: Icon(
+                leading: const Icon(
                   Icons.person,
-                  color: Colors.blue.shade400,
+                  color: Colors.red,
                 ),
                 title: const Text("Profile"),
                 onTap: () {
@@ -133,27 +133,28 @@ class MenuUtamaState extends State<MenuUtama> {
                 },
               ),
               ListTile(
-                leading: Icon(
+                leading: const Icon(
                   Icons.info,
-                  color: Colors.blue[900],
+                  color: Colors.red,
                 ),
                 title: const Text("Tentang"),
                 onTap: () {
                   AwesomeDialog(
-                    context: context,
-                    dialogType: DialogType.INFO,
-                    animType: AnimType.BOTTOMSLIDE,
-                    title: 'Toko Kueku',
-                    desc: 'Toko Kueku adalah sebuat aplikasi android  ' +
-                        'pemesanan kue basah rumahan',
-                    // btnCancelOnPress: () {},
-                    btnOkOnPress: () {},
-                  )..show();
+                          context: context,
+                          dialogType: DialogType.INFO,
+                          animType: AnimType.BOTTOMSLIDE,
+                          title: 'Toko Kueku',
+                          desc: 'Toko Kueku adalah sebuat aplikasi android  ' +
+                              'pemesanan kue basah rumahan',
+                          // btnCancelOnPress: () {},
+                          btnOkOnPress: () {},
+                          btnOkColor: Colors.red)
+                      .show();
                 },
               ),
               ListTile(
                 leading: const Icon(
-                  Icons.exit_to_app,
+                  Icons.logout,
                   color: Colors.red,
                 ),
                 title: const Text("Keluar"),
@@ -177,29 +178,28 @@ class MenuUtamaState extends State<MenuUtama> {
             children: <Widget>[
               Card(
                 margin: const EdgeInsets.all(8.0),
+                color: Colors.red,
                 child: InkWell(
                   // onTap: () {},
                   onTap: () {
-                    //Navigator.push(context,
-                    //    MaterialPageRoute(builder: (context) => HomeScreen()));
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const Profile()));
                   },
 
-                  splashColor: Colors.green,
+                  splashColor: Colors.red,
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: const <Widget>[
-                        Icon(Icons.person, color: Colors.blue, size: 70.0),
+                        Icon(Icons.person, color: Colors.white, size: 70.0),
                         SizedBox(
                           height: 20,
                         ),
                         Text(
                           "Profile",
-                          style: TextStyle(fontSize: 17.0),
+                          style: TextStyle(fontSize: 17.0, color: Colors.white),
                         ),
                       ],
                     ),
@@ -208,6 +208,7 @@ class MenuUtamaState extends State<MenuUtama> {
               ),
               Card(
                 margin: const EdgeInsets.all(8.0),
+                color: Colors.red,
                 child: InkWell(
                   // onTap: () {},
                   onTap: () {
@@ -217,18 +218,18 @@ class MenuUtamaState extends State<MenuUtama> {
                             builder: (context) => const HomeScreen()));
                   },
 
-                  splashColor: Colors.green,
+                  splashColor: Colors.red,
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: const <Widget>[
-                        Icon(Icons.cake, color: Colors.red, size: 70.0),
+                        Icon(Icons.cake, color: Colors.white, size: 70.0),
                         SizedBox(
                           height: 20,
                         ),
                         Text(
                           "Order",
-                          style: TextStyle(fontSize: 17.0),
+                          style: TextStyle(fontSize: 17.0, color: Colors.white),
                         ),
                       ],
                     ),
@@ -237,23 +238,24 @@ class MenuUtamaState extends State<MenuUtama> {
               ),
               Card(
                 margin: const EdgeInsets.all(8.0),
+                color: Colors.red,
                 child: InkWell(
                   // onTap: () {},
                   onTap: () {
                     _launchWhatsapp();
                   },
-                  splashColor: Colors.green,
+                  splashColor: Colors.red,
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: const <Widget>[
-                        Icon(Icons.whatsapp, color: Colors.green, size: 70.0),
+                        Icon(Icons.whatsapp, color: Colors.white, size: 70.0),
                         SizedBox(
                           height: 20,
                         ),
                         Text(
                           "Chat via Whatsapp",
-                          style: TextStyle(fontSize: 17.0),
+                          style: TextStyle(fontSize: 17.0, color: Colors.white),
                         ),
                       ],
                     ),
@@ -262,6 +264,7 @@ class MenuUtamaState extends State<MenuUtama> {
               ),
               Card(
                 margin: const EdgeInsets.all(8.0),
+                color: Colors.red,
                 child: InkWell(
                   // onTap: () {},
                   onTap: () {
@@ -270,19 +273,19 @@ class MenuUtamaState extends State<MenuUtama> {
                         MaterialPageRoute(
                             builder: (context) => const LiveChat()));
                   },
-                  splashColor: Colors.green,
+                  splashColor: Colors.red,
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: const <Widget>[
                         Icon(Icons.chat_bubble,
-                            color: Colors.orange, size: 70.0),
+                            color: Colors.white, size: 70.0),
                         SizedBox(
                           height: 20,
                         ),
                         Text(
                           "Live Chat",
-                          style: TextStyle(fontSize: 17.0),
+                          style: TextStyle(fontSize: 17.0, color: Colors.white),
                         ),
                       ],
                     ),

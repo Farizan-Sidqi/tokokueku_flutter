@@ -277,11 +277,13 @@ class _OrderScreenState extends State<OrderScreen> {
       onWillPop: () => toHomeScreen(),
       child: Scaffold(
           appBar: AppBar(
+              backgroundColor: Color.fromARGB(255, 223, 53, 53),
               leading: BackButton(onPressed: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => const MenuUtama()));
               }),
               title: const Text('Detail Order'),
+              centerTitle: true,
               actions: const <Widget>[]),
           resizeToAvoidBottomInset: true,
           body: Container(
@@ -366,10 +368,13 @@ class _OrderScreenState extends State<OrderScreen> {
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Colors.red),
                                                 onPressed: () {
                                                   simpanOrder();
                                                 },
-                                                child: const Text("SIMPAN"))
+                                                child: const Text("ORDER"))
                                           ],
                                         ),
                                       ],

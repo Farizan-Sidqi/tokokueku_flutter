@@ -44,10 +44,11 @@ class _LiveChatState extends State<LiveChat> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Live Chat'),
-          backgroundColor: Color(0xFFFF9800),
+          backgroundColor: Color.fromARGB(255, 223, 53, 53),
           elevation: 0,
           leading: BackButton(onPressed: () {
             Navigator.pushReplacement(context,

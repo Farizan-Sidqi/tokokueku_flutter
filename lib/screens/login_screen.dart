@@ -18,8 +18,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  String _email = 'naufal@nafaarts.com';
-  String _password = '123123123';
+  String _email = '';
+  String _password = '';
 
   loginPressed() async {
     if (_email.isNotEmpty && _password.isNotEmpty) {
