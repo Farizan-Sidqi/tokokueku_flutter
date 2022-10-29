@@ -19,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final String apiUrl = "http://103.187.147.121/api/produk";
+  final String apiUrl = "https://farizan.my.id/api/produk";
   List<ListOrder> orderList = [];
   int totalItem = 0;
 
@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: CircleAvatar(
           backgroundImage:
               // ignore: prefer_interpolation_to_compose_strings
-              NetworkImage('http://103.187.147.121/foto/' + item['foto']),
+              NetworkImage('https://farizan.my.id/foto/' + item['foto']),
         ),
         title: InkWell(
           child: Text(item['nama'].toString(),

@@ -97,7 +97,7 @@ class _OrderScreenState extends State<OrderScreen> {
 
       debugPrint(postData.toString());
       final response =
-          await http.post(Uri.parse("http://103.187.147.121/api/order/store"),
+          await http.post(Uri.parse("https://farizan.my.id/api/order/store"),
               headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
               },
@@ -200,7 +200,7 @@ class _OrderScreenState extends State<OrderScreen> {
       child: ListTile(
         leading: CircleAvatar(
           backgroundImage:
-              NetworkImage('http://103.187.147.121/foto/${item.foto}'),
+              NetworkImage('https://farizan.my.id/foto/${item.foto}'),
         ),
         title:
             Text(item.nama.toString(), style: const TextStyle(fontSize: 18.0)),

@@ -18,7 +18,7 @@ class _DetailProdukState extends State<DetailProduk> {
     final double hargaProduk = double.parse(widget.produk['harga'].toString());
     final String deskripsiProduk = widget.produk['deskripsi'];
     final String photoProduk =
-        'http://103.187.147.121/foto/${widget.produk['foto']}';
+        'https://farizan.my.id/foto/${widget.produk['foto']}';
 
     final formatter = NumberFormat.simpleCurrency(locale: 'id_ID');
     final String hargaProdukRupiah = formatter.format(hargaProduk);

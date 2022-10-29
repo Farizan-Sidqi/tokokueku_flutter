@@ -52,7 +52,7 @@ class ProfileState extends State<Profile> {
     var id = pref.getString("id_user");
     var accessToken = pref.getString("token");
     final result = await http
-        .get(Uri.parse("http://103.187.147.121/api/get-profile/$id"), headers: {
+        .get(Uri.parse("https://farizan.my.id/api/get-profile/$id"), headers: {
       'Content-Type': 'application/json;charset=UTF-8',
       'Charset': 'utf-8'
     });
@@ -65,7 +65,7 @@ class ProfileState extends State<Profile> {
         _email = dataDecode['email'];
         _alamat = dataDecode['alamat'];
         _no_wa = dataDecode['no_wa'];
-        //_avatar = "http://103.187.147.121/user_foto/" + dataDecode["foto"];
+        //_avatar = "https://farizan.my.id/user_foto/" + dataDecode["foto"];
 
         textNama.text = dataDecode['nama'].toString();
         textEmail.text = dataDecode['email'].toString();
@@ -75,11 +75,11 @@ class ProfileState extends State<Profile> {
       });
 
       final imageResponse = await http.get(
-          Uri.parse("http://103.187.147.121/user_foto/" + dataDecode["foto"]));
+          Uri.parse("https://farizan.my.id/user_foto/" + dataDecode["foto"]));
 
       if (imageResponse.statusCode == 200) {
         setState(() {
-          _avatar = "http://103.187.147.121/user_foto/" + dataDecode["foto"];
+          _avatar = "https://farizan.my.id/user_foto/" + dataDecode["foto"];
         });
       }
     }
@@ -92,7 +92,7 @@ class ProfileState extends State<Profile> {
         'Authorization': 'Bearer $token'
       };
       var request = http.MultipartRequest('POST',
-          Uri.parse("http://103.187.147.121/api/update-profile/$idUser"));
+          Uri.parse("https://farizan.my.id/api/update-profile/$idUser"));
       request.headers.addAll(headers);
       request.fields['email'] = _email;
       request.fields['nama'] = _nama;
@@ -117,8 +117,8 @@ class ProfileState extends State<Profile> {
         setState(() {
           isPreview = false;
           if (photoPath != null) {
-            _avatar = "http://103.187.147.121/user_foto/" +
-                dataDecode['data']['foto'];
+            _avatar =
+                "https://farizan.my.id/user_foto/" + dataDecode['data']['foto'];
           }
           photoPath = null;
         });

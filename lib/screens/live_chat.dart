@@ -21,7 +21,7 @@ class _LiveChatState extends State<LiveChat> {
     var id = pref.getString("id_user");
     var accessToken = pref.getString("token");
     final result = await http
-        .get(Uri.parse("http://103.187.147.121/api/get-profile/$id"), headers: {
+        .get(Uri.parse("https://farizan.my.id/api/get-profile/$id"), headers: {
       'Content-Type': 'application/json;charset=UTF-8',
       'Charset': 'utf-8'
     });
